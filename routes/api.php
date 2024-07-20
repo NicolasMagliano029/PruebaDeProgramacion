@@ -22,3 +22,4 @@ Route->post("/persona",[PersonaController::class,"crear"]);
 Route->get("/personas",[PersonaController::class,"lista"]);
 Route->get("/persona/{d}",[PersonaController::class,"mostrar"]);
 Route->post("/persona/{d}",[PersonaController::class,"editar"]);
+Route->get("/persona/{d}/eliminar",[PersonaController::class,"eliminar"]);

@@ -32,7 +32,7 @@ class PersonaController extends Controller
 
     public function mostrar(Request $request, $id){
         try {
-            $persona = Persona::find($id);
+            $persona = Persona::findOrFail($id);
             return $persona;
         } catch (\Exception $err){
             return response()->status(400)->json(["error mesage" => "No encontrado"]);
@@ -41,7 +41,7 @@ class PersonaController extends Controller
 
     public function editar(Request $request, $id){
         try {
-            $persona = Persona::find($id);
+            $persona = Persona::findOrFail($id);
             if ($request->has("nombre")) $persona-> nombre = $request->post("nombre");
             if ($request->has("apellido")) $persona->apellido = $request->post("apellido");
             if ($request->has("telefono")) $persona->telefono = $request->post("telefono");
@@ -49,6 +49,16 @@ class PersonaController extends Controller
             return $persona;
         } catch (\Exception $err){
             return response()->status(400)->json(["error mesage" => "No actualizado"]);
+        }
+    }
+
+    public function eliminar(Request $request, $id){
+        try {
+            $persona = Persona::findOrFail($id);
+            $persona->delete();
+            return response()->json(["message" => "Eliminado correctamente"]);
+        } catch (\Exception $err){
+            return response()->status(400)->json(["error mesage" => "No eliminado"]);
         }
     }
 }
