@@ -21,5 +21,14 @@ class PersonaController extends Controller
         }
     }
 
+    public function lista(request $request){
+        try {
+            $personas = Persona::all();
+            return $personas;
+        } catch (\Exception $err){
+            return response()->status(400)->json(["error mesage" => "No encontrado"]);
+        }
+    }
+
 }
 

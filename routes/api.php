@@ -18,4 +18,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route->post("/user",[PersonaController::class,"crear"]);
+Route->post("/persona",[PersonaController::class,"crear"]);
+Route->get("/personas",[PersonaController::class,"Listar"]);
