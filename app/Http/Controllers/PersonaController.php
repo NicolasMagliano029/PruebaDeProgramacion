@@ -38,7 +38,18 @@ class PersonaController extends Controller
             return response()->status(400)->json(["error mesage" => "No encontrado"]);
         }
     }
-    
 
+    public function editar(Request $request, $id){
+        try {
+            $persona = Persona::find($id);
+            if ($request->has("nombre")) $persona-> nombre = $request->post("nombre");
+            if ($request->has("apellido")) $persona->apellido = $request->post("apellido");
+            if ($request->has("telefono")) $persona->telefono = $request->post("telefono");
+            $persona->save();
+            return $persona;
+        } catch (\Exception $err){
+            return response()->status(400)->json(["error mesage" => "No actualizado"]);
+        }
+    }
 }
 
