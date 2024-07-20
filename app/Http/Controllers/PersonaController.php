@@ -8,7 +8,7 @@ use App\Models\Persona;
 
 class PersonaController extends Controller
 {
-    public function crear(request $request){
+    public function crear(Request $request){
        try {
             $persona = new Persona();
             $persona->nombre = $request->post("nombre");
@@ -21,7 +21,7 @@ class PersonaController extends Controller
         }
     }
 
-    public function lista(request $request){
+    public function lista(Request $request){
         try {
             $personas = Persona::all();
             return $personas;
@@ -29,6 +29,16 @@ class PersonaController extends Controller
             return response()->status(400)->json(["error mesage" => "No encontrado"]);
         }
     }
+
+    public function mostrar(Request $request, $id){
+        try {
+            $persona = Persona::find($id);
+            return $persona;
+        } catch (\Exception $err){
+            return response()->status(400)->json(["error mesage" => "No encontrado"]);
+        }
+    }
+    
 
 }
 
