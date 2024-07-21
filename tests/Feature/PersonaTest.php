@@ -82,4 +82,19 @@ class PersonaTest extends TestCase
         $response -> assertJsonStructure(["Error"]);
         $response -> assertJsonFragment(["Error" => "Persona no encontrada"]);
     }
+
+    public function test_eliminar(){
+        $response = $this->get("/api/persona/1/eliminar");
+        $response -> assertStatus(200);
+        $response -> assertJsonStructure(["Mensaje"]);
+        $response -> assertJsonFragment(["Mensaje" => "Persona eliminada correctamente"]);
+        $this->assertSoftDeleted("persona", ["id" => 1]);
+    }
+
+    public function test_eliminarError(){
+        $response = $this->get("/api/persona/999/eliminar");
+        $response -> assertStatus(400);
+        $response -> assertJsonStructure(["Error"]);
+        $response -> assertJsonFragment(["Error" => "Error al eliminar Persona"]);
+    }
 }
