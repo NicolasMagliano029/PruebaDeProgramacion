@@ -15,27 +15,27 @@ class PersonaController extends Controller
             $persona->apellido = $request->post("apellido");
             $persona->telefono = $request->post("telefono");
             $persona->save();
-            return $persona;
+            return response()->json(["Mensaje" => "Persona creada correctamente"]);
         } catch (\Exception $err){
-            return response()->status(400)->json(["error mesage" => "No creado"]); 
+            return response()->json(["Error" => "Error al crear Persona"], 400); 
         }
     }
 
     public function lista(Request $request){
         try {
             $personas = Persona::all();
-            return $personas;
+            return response()->json(["Personas"=>$personas]);
         } catch (\Exception $err){
-            return response()->status(400)->json(["error mesage" => "No encontrado"]);
+            return response()->json(["Error" => "Error al listar Personas"], 500);
         }
     }
 
     public function mostrar(Request $request, $id){
         try {
             $persona = Persona::findOrFail($id);
-            return $persona;
+            return response()->json(["Persona"=>$persona]);
         } catch (\Exception $err){
-            return response()->status(400)->json(["error mesage" => "No encontrado"]);
+            return response()->json(["Error" => "Persona no encontrada"], 404);
         }
     }
 
@@ -46,9 +46,9 @@ class PersonaController extends Controller
             if ($request->has("apellido")) $persona->apellido = $request->post("apellido");
             if ($request->has("telefono")) $persona->telefono = $request->post("telefono");
             $persona->save();
-            return $persona;
+            return response()->json(["Mensaje" => "Persona actualizada correctamente"]);
         } catch (\Exception $err){
-            return response()->status(400)->json(["error mesage" => "No actualizado"]);
+            return response()->json(["Error" => "Error al actualizar Persona"], 400);
         }
     }
 
@@ -56,9 +56,9 @@ class PersonaController extends Controller
         try {
             $persona = Persona::findOrFail($id);
             $persona->delete();
-            return response()->json(["message" => "Eliminado correctamente"]);
+            return response()->json(["Mensaje" => "Persona eliminada correctamente"]);
         } catch (\Exception $err){
-            return response()->status(400)->json(["error mesage" => "No eliminado"]);
+            return response()->json(["Error" => "Error al eliminar Persona"], 400);
         }
     }
 }
