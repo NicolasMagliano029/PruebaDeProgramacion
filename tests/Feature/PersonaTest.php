@@ -69,4 +69,17 @@ class PersonaTest extends TestCase
         $response -> assertStatus(200);
         $response -> assertJsonStructure(["Personas" => ["*" => ["id", "nombre", "apellido", "telefono", "created_at", "updated_at", "deleted_at"]]]);
     }
+
+    public function test_buscar(){
+        $response = $this->get("/api/persona/1");
+        $response -> assertStatus(200);
+        $response -> assertJsonStructure(["Persona" => ["id", "nombre", "apellido", "telefono", "created_at", "updated_at", "deleted_at"]]);
+    }
+
+    public function test_buscarError(){
+        $response = $this->get("/api/persona/999");
+        $response -> assertStatus(404);
+        $response -> assertJsonStructure(["Error"]);
+        $response -> assertJsonFragment(["Error" => "Persona no encontrada"]);
+    }
 }
