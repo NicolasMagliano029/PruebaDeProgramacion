@@ -40,7 +40,7 @@ class PersonaTest extends TestCase
     {
         $persona = [
             "nombre" => "Charmander",
-            "apellido" => "Rodrigues",
+            "apellido" => "Rodriguez",
             "telefono" => 987654321,
         ];
         $response = $this->post("/api/persona/1", $persona);
@@ -54,7 +54,7 @@ class PersonaTest extends TestCase
     {
         $persona = [
             "nombre" => "Charmander",
-            "apellido" => "Rodrigues",
+            "apellido" => "Rodriguez",
             "telefono" => "987a5a321",
         ];
         $response = $this->post("/api/persona/1", $persona);
@@ -64,4 +64,9 @@ class PersonaTest extends TestCase
         $this->assertDatabaseMissing("persona", $persona);
     }
 
+    public function test_listar(){
+        $response = $this->get("/api/personas");
+        $response -> assertStatus(200);
+        $response -> assertJsonStructure(["Personas" => ["*" => ["id", "nombre", "apellido", "telefono", "created_at", "updated_at", "deleted_at"]]]);
+    }
 }
